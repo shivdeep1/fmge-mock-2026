@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FMGE Mock Test — June 2026</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ START SCREEN ============ -->
+<section id="screen-start" class="screen active">
+  <div class="card start-card">
+    <h1>FMGE Mock Test <span class="badge-year">June 2026</span></h1>
+    <p class="subtitle">Full-length simulation · <span id="sub-total">300</span> questions · 2 parts</p>
+
+    <div class="instructions">
+      <h3>Instructions — read carefully</h3>
+      <ul>
+        <li><b><span id="sub-total2">300</span> single-best-answer MCQs</b> split into two parts.</li>
+        <li><b>Part A</b> — <span id="sub-a">150</span> questions, <b>150 minutes</b> (pre &amp; para-clinical).</li>
+        <li><b>Part B</b> — <span id="sub-b">150</span> questions, <b>150 minutes</b> (clinical).</li>
+        <li><b>No negative marking.</b> Pass mark = 50% of total.</li>
+        <li>Use the <b>palette</b> to jump between questions; <b>Mark for Review</b> to flag.</li>
+        <li>Each part <b>auto-submits</b> when its timer hits zero. Part A locks once submitted.</li>
+        <li>Your progress is saved in this browser — a refresh will resume the exam.</li>
+        <li>At the end you'll see your score, time, weak areas, and <b>explanations</b> for every question.</li>
+      </ul>
+    </div>
+
+    <label class="field">
+      <span>Candidate name (optional)</span>
+      <input type="text" id="candidate-name" placeholder="Enter your name" autocomplete="off">
+    </label>
+
+    <div class="start-actions">
+      <button id="btn-begin" class="btn btn-primary btn-lg">Begin Part A &rarr;</button>
+      <button id="btn-resume" class="btn btn-outline btn-lg hidden">Resume saved attempt</button>
+      <button id="btn-clear-saved" class="btn btn-text hidden">Discard saved attempt</button>
+    </div>
+    <p class="hint" id="start-hint"></p>
+  </div>
+  <footer class="page-footer">Not affiliated with NBEMS · practice simulation only</footer>
+</section>
+
+<!-- ============ EXAM SCREEN ============ -->
+<section id="screen-exam" class="screen">
+  <header class="exam-header">
+    <div class="exam-header-left">
+      <span class="part-pill" id="exam-part-label">Part A</span>
+      <span class="cand" id="exam-candidate"></span>
+    </div>
+    <div class="exam-header-right">
+      <div class="timer" id="timer">150:00</div>
+    </div>
+  </header>
+
+  <div class="exam-body">
+    <main class="question-pane">
+      <div class="q-meta">
+        <span class="q-number" id="q-number">Question 1</span>
+        <span class="q-tags">
+          <span class="tag tag-subject" id="q-subject">Subject</span>
+          <span class="tag tag-diff" id="q-difficulty">moderate</span>
+        </span>
+      </div>
+      <div class="q-text" id="q-text"></div>
+      <form class="options" id="options"></form>
+
+      <div class="q-controls">
+        <button class="btn btn-outline" id="btn-mark-next">Mark for Review &amp; Next</button>
+        <button class="btn btn-ghost" id="btn-clear">Clear Response</button>
+        <div class="spacer"></div>
+        <button class="btn btn-ghost" id="btn-prev">&larr; Previous</button>
+        <button class="btn btn-primary" id="btn-save-next">Save &amp; Next &rarr;</button>
+      </div>
+    </main>
+
+    <aside class="palette-pane">
+      <div class="palette-counts" id="palette-counts"></div>
+      <div class="legend">
+        <span><i class="sw answered"></i>Answered</span>
+        <span><i class="sw notans"></i>Not answered</span>
+        <span><i class="sw notvis"></i>Not visited</span>
+        <span><i class="sw marked"></i>Marked</span>
+        <span><i class="sw ansmarked"></i>Marked &amp; answered</span>
+      </div>
+      <div class="palette" id="palette"></div>
+      <button class="btn btn-danger btn-block" id="btn-submit-part">Submit Part</button>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ TRANSITION SCREEN ============ -->
+<section id="screen-transition" class="screen">
+  <div class="card center-card">
+    <div class="big-check">✓</div>
+    <h2 id="transition-title">Part A submitted</h2>
+    <p id="transition-msg" class="transition-msg"></p>
+    <button id="btn-begin-b" class="btn btn-primary btn-lg">Begin Part B &rarr;</button>
+  </div>
+</section>
+
+<!-- ============ RESULT SCREEN ============ -->
+<section id="screen-result" class="screen">
+  <div class="result-wrap">
+    <div class="card result-head">
+      <div class="result-score-block">
+        <div class="score-num"><span id="result-score">0</span><span class="score-den" id="score-den">/ 300</span></div>
+        <div class="score-pct" id="result-pct">0%</div>
+        <div class="result-badge" id="result-badge">—</div>
+      </div>
+      <div class="result-cand" id="result-cand"></div>
+    </div>
+
+    <div class="result-grid">
+      <div class="card stat"><span class="stat-label">Part A</span><span class="stat-val" id="result-partA">0 / 150</span></div>
+      <div class="card stat"><span class="stat-label">Part B</span><span class="stat-val" id="result-partB">0 / 150</span></div>
+      <div class="card stat"><span class="stat-label">Correct</span><span class="stat-val good" id="result-correct">0</span></div>
+      <div class="card stat"><span class="stat-label">Incorrect</span><span class="stat-val bad" id="result-incorrect">0</span></div>
+      <div class="card stat"><span class="stat-label">Unattempted</span><span class="stat-val" id="result-unattempted">0</span></div>
+      <div class="card stat"><span class="stat-label">Accuracy</span><span class="stat-val" id="result-accuracy">0%</span></div>
+      <div class="card stat"><span class="stat-label">Time — Part A</span><span class="stat-val" id="result-timeA">0:00</span></div>
+      <div class="card stat"><span class="stat-label">Time — Part B</span><span class="stat-val" id="result-timeB">0:00</span></div>
+    </div>
+
+    <div class="card">
+      <h3>Subject-wise performance</h3>
+      <table class="subject-table">
+        <thead><tr><th>Subject</th><th>Part</th><th>Correct</th><th>Attempted</th><th>Total</th><th>Accuracy</th></tr></thead>
+        <tbody id="subject-table"></tbody>
+      </table>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary btn-lg" id="btn-review">Review all answers &amp; explanations</button>
+      <button class="btn btn-outline" id="btn-print">Save / print result</button>
+      <button class="btn btn-ghost" id="btn-retake">Retake test</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEW SCREEN ============ -->
+<section id="screen-review" class="screen">
+  <div class="review-wrap">
+    <div class="review-bar">
+      <button class="btn btn-ghost" id="btn-back-result">&larr; Back to result</button>
+      <div class="review-filters" id="review-filters"></div>
+    </div>
+    <div id="review-list"></div>
+  </div>
+</section>
+
+<!-- ============ SUBMIT MODAL ============ -->
+<div id="modal-submit" class="modal-overlay hidden">
+  <div class="modal">
+    <h3 id="modal-title">Submit Part A?</h3>
+    <div id="modal-summary" class="modal-summary"></div>
+    <p class="modal-warn" id="modal-warn"></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="btn-cancel-submit">Keep working</button>
+      <button class="btn btn-danger" id="btn-confirm-submit">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
