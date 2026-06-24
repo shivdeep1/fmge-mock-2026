@@ -76,7 +76,14 @@ h1{margin:.2rem 0; font-size:2rem}
 .tag{font-size:.72rem; font-weight:700; padding:.2rem .55rem; border-radius:999px; text-transform:uppercase; letter-spacing:.3px}
 .tag-subject{background:#e7eefc; color:var(--primary-d)}
 .tag-diff{background:#f0eafd; color:var(--purple)}
-.q-text{font-size:1.12rem; margin-bottom:1.2rem; white-space:pre-wrap}
+.q-text{font-size:1.12rem; margin-bottom:1rem; white-space:pre-wrap}
+.q-figure{margin:0 0 1.2rem; padding:.7rem; border:1px solid var(--line); border-radius:10px; background:#fbfcfe; text-align:center; overflow-x:auto}
+.q-figure svg, .rev-figure svg{max-width:100%; height:auto}
+.q-figure table, .rev-figure table{margin:.2rem auto; border-collapse:collapse; font-size:.92rem}
+.q-figure th,.q-figure td,.rev-figure th,.rev-figure td{border:1px solid var(--line); padding:.4rem .8rem; text-align:left}
+.q-figure caption{font-weight:600; margin-bottom:.4rem; color:var(--muted)}
+.rev-figure{margin:.5rem 0; text-align:center; padding:.5rem; border:1px solid var(--line); border-radius:8px; background:#fbfcfe; overflow-x:auto}
+.tag-type{background:#fde7cf; color:#b3590a}
 .options{display:flex; flex-direction:column; gap:.6rem; margin-bottom:1rem}
 .opt{display:flex; gap:.7rem; align-items:flex-start; border:1px solid var(--line); border-radius:10px; padding:.8rem .9rem; cursor:pointer; transition:.1s}
 .opt:hover{border-color:var(--primary); background:#f7faff}

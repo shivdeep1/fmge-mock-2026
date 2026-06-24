@@ -53,6 +53,21 @@ function report(part) {
 const a = report("A"), b = report("B");
 console.log(`\nGRAND TOTAL: ${a + b} / 300\n`);
 
+// answer-key position distribution & question-type tally
+const dist = [0, 0, 0, 0], types = {};
+QUESTIONS.forEach(q => {
+  if (Number.isInteger(q.answer) && q.answer >= 0 && q.answer < 4) dist[q.answer]++;
+  const ty = q.type || "sba"; types[ty] = (types[ty] || 0) + 1;
+});
+const n = QUESTIONS.length;
+console.log("Answer position:", ["A", "B", "C", "D"].map((k, i) => `${k}=${dist[i]} (${Math.round(100 * dist[i] / n)}%)`).join("  "));
+console.log("Question types: ", Object.entries(types).map(([k, v]) => `${k}=${v}`).join("  "));
+if (n >= 40) {
+  const lo = Math.min(...dist), hi = Math.max(...dist);
+  if (hi > n * 0.35 || lo < n * 0.15) warnings.push(`Answer key looks skewed (A-D = ${dist.join("/")}); aim ~25% each.`);
+}
+console.log("");
+
 if (warnings.length) { console.log("WARNINGS:"); warnings.forEach(w => console.log("  ! " + w)); }
 if (errors.length) { console.log("\nERRORS:"); errors.forEach(e => console.log("  ✗ " + e)); process.exit(1); }
 console.log("\n✓ No structural errors.");

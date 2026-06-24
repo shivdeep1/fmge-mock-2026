@@ -91,6 +91,16 @@
     t.classList.toggle("danger", r <= 60);
   }
 
+  const TYPE_LABEL = { image: "🖼 Image-based", match: "Match the following", assertion: "Assertion–Reason" };
+  function renderFigure(container, q) {
+    if (q && q.figure) { container.innerHTML = q.figure; container.hidden = false; }
+    else { container.innerHTML = ""; container.hidden = true; }
+  }
+  function renderTypeTag(tag, q) {
+    const label = q && TYPE_LABEL[q.type];
+    if (label) { tag.textContent = label; tag.hidden = false; } else { tag.textContent = ""; tag.hidden = true; }
+  }
+
   function renderQuestion() {
     const q = curQ();
     cur().visited[q.id] = true;
@@ -98,6 +108,8 @@
     el("q-subject").textContent = q.subject;
     el("q-difficulty").textContent = q.difficulty || "moderate";
     el("q-text").textContent = q.question;
+    renderFigure(el("q-figure"), q);
+    renderTypeTag(el("q-type"), q);
 
     const form = el("options");
     form.innerHTML = "";
@@ -353,11 +365,12 @@
                   escapeHtml(o) + "</span>" + (mk ? "<span class='mk'>" + mk + "</span>" : "") + "</div>";
         });
         const t = state.parts[part].timeSpent[q.id];
+        const figHtml = q.figure ? "<div class='rev-figure'>" + q.figure + "</div>" : "";
         card.innerHTML =
           "<div class='rev-head'><span class='rev-num'>Part " + part + " · Q" + (idx + 1) +
           " <span class='tag tag-subject'>" + q.subject + "</span></span>" +
           "<span class='rev-status " + st + "'>" + st.toUpperCase() + "</span></div>" +
-          "<div class='rev-text'>" + escapeHtml(q.question) + "</div>" + opts +
+          "<div class='rev-text'>" + escapeHtml(q.question) + "</div>" + figHtml + opts +
           "<div class='rev-exp'><b>Explanation:</b> " + escapeHtml(q.explanation || "") + "</div>" +
           "<div class='rev-meta'><span>Difficulty: " + (q.difficulty || "moderate") + "</span>" +
           (q.topic ? "<span>Topic: " + escapeHtml(q.topic) + "</span>" : "") +
